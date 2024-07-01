@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
+<?php require_once("function/book-class.php");?>
+<?php require_once("function/user-session.php");?>
   <?php require_once("assets/parts/user-head.php"); ?>
 <body>
 <?php require_once("assets/inc/navbar.php"); ?>
 
 <?php require_once("assets/inc/banner.php"); ?>
 <?php require_once("assets/inc/script.php"); ?>
-<?php require_once("function/book-class.php");?>
 <?php $category = $book->getCategory(); ?>
 <div class="container mt-5" id="category">
 	<h5 class="text-center">Top Selling Categories</h5>
@@ -25,8 +26,13 @@ foreach ($category as $bookCat) { ?>
       <div class="box">
         <br><br>
         <h5 class="mt-4"><?=$bookCat['category_name']?></h5>
-        <a href="#" class="btn mt-5 text-light fw-bold">Browse All</a>
-      </div>
+           <?php if (!isset($userinfo['user_id'])){?>
+                 <a href="login.php" class="btn browse mt-5 text-light fw-bold">Browse All</a>
+
+         <?php } else{ ?>
+                  <a href="product_category.php?category_id=<?= base64_encode($bookCat['category_id'])?>" class="btn browse mt-5 text-light fw-bold">Browse All</a>
+         <?php } ?>      
+         </div>
      </div>
 <?php } }?>
   </div>
